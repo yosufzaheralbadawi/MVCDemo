@@ -1,4 +1,4 @@
-﻿namespace Demo.PL.ViewModels
+namespace Demo.PL.ViewModels
 {
     public class DepartmentEditViewModel
     {

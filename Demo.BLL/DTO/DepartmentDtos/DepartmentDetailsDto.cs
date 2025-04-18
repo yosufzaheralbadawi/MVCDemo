@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.BLL.DTO
+namespace Demo.BLL.DTO.DepartmentDtos
 {
     public class DepartmentDetailsDto
     {

@@ -1,29 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.DAL.Models;
+using Demo.DAL.Models.DepartmentModels;
 
 namespace Demo.DAL.Data.Repositries.Interfacies
 {
-    public interface IDepartmentRepostitory
+    public interface IDepartmentRepostitory : IGenericRepository<Department>
     {
 
-        // Get All
-        IEnumerable<Department> GetAll(bool withTracking = false);
-
-        // Get By Id
-        Department GetById(int id);
-
-        // Update
-        int Update(Department Entity);
-
-        // Delete
-        int Delete(Department Entity);
-
-        // Insert
-        int Add(Department Entity);
+       
 
     }
 }

@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.BLL.DTO
+
+namespace Demo.DAL.Models.DepartmentModels
 {
-    public class DepartmentDto
+    public class Department : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
+
         public string Code { get; set; }
+
         public string? Description { get; set; }
-        
-        public DateOnly? DataOfCreation { get; set; }
     }
 }

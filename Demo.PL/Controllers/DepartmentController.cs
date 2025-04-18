@@ -1,5 +1,6 @@
-﻿using Demo.BLL.DTO;
-using Demo.BLL.Services;
+using Demo.BLL.DTO;
+using Demo.BLL.DTO.DepartmentDtos;
+using Demo.BLL.Services.Interfaces;
 using Demo.PL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -140,6 +141,55 @@ namespace Demo.PL.Controllers
 
             return View(viewModel);
         }
+
+        //[HttpGet]
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (!id.HasValue) return BadRequest();
+        //    var department = _departmentService.GetDeparmentById(id.Value);
+        //    if (department == null) return NotFound();
+        //    return View(department);
+
+        //}
+
+        [HttpPost]
+
+        public IActionResult Delete(int id)
+        {
+            if (id == 0) return BadRequest();
+            try
+            {
+                bool deleted = _departmentService.DeleteDepartment(id);
+                if (deleted)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Department is not deleted");
+                    // data of department
+                    return RedirectToAction(nameof(Delete), new { id });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (_environment.IsDevelopment())
+                {
+                    // 1. Development => Log Error in Console and return same view with error msg
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // 2. Deployment => Log Error in file | Table in database And Return Error view
+                    _logger.LogError(ex.Message);
+                    return View("Error");
+                }
+
+
+            }
+        }
+
 
     }
 }

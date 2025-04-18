@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.DAL.Models;
+using Demo.DAL.Models.DepartmentModels;
+using Demo.DAL.Models.EmployeeModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.DAL.Data.Configurations
@@ -27,6 +28,8 @@ namespace Demo.DAL.Data.Configurations
         }
 
         public DbSet<Department> Departments { get; set; } // table
+
+        public DbSet<Employee> Employees { get; set; }
 
     }
 }

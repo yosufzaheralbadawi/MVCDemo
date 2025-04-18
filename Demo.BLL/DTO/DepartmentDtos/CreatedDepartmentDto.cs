@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.DAL.Models;
 
-namespace Demo.BLL.DTO
+namespace Demo.BLL.DTO.DepartmentDtos
+
 {
     public class CreatedDepartmentDto
     {
@@ -17,4 +19,6 @@ namespace Demo.BLL.DTO
 
         public string? Description { get; set; }
     }
+
+
 }

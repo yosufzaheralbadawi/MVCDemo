@@ -1,15 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.BLL.DTO;
+using Demo.BLL.DTO.DepartmentDtos;
+
 using Demo.BLL.Factories;
+using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Data.Repositries.Classes;
 using Demo.DAL.Data.Repositries.Interfacies;
 using Demo.DAL.Models;
 
-namespace Demo.BLL.Services
+
+namespace Demo.BLL.Services.Clases
 {
     public class DepartmentService(IDepartmentRepostitory _departmentRepository) : IDepartmentService
     {

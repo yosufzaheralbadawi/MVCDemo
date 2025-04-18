@@ -1,4 +1,6 @@
-using Demo.BLL.Services;
+using Demo.BLL.Profailes;
+using Demo.BLL.Services.Clases;
+using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Data.Configurations;
 using Demo.DAL.Data.Repositries.Classes;
 using Demo.DAL.Data.Repositries.Interfacies;
@@ -20,8 +22,10 @@ namespace Demo.PL
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddScoped<IDepartmentRepostitory, DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();    
-
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IEmployeeRepository , EmployeeRespository>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfailes() ));
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
