@@ -41,7 +41,7 @@ namespace Demo.BLL.Services.Clases
             return department is null ? null : department.ToDepartmentDetailsDto();
 
         }
-
+        
         public int AddDepartment(CreatedDepartmentDto departmentDto)
         {
             var deprtment = departmentDto.ToEntity();

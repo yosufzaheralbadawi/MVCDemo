@@ -8,7 +8,7 @@ namespace Demo.DAL.Models.EmployeeModel
 {
     public enum EmployeeType
     {
-        FullTime,
-        PartTime
+        FullTime =1 ,
+        PartTime =2 ,
     }
 }
