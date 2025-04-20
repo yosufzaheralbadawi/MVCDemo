@@ -49,5 +49,10 @@ namespace Demo.DAL.Data.Repositries.Classes
             return _dbContext.SaveChanges();
         }
 
+        public void Updatetest()
+        {
+            
+        }
+
     }
 }
