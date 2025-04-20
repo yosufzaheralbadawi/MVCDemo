@@ -188,8 +188,12 @@ namespace Demo.PL.Controllers
 
 
             }
-        }
 
+        }
+        public IActionResult Create1()
+        {
+            return View();
+        }
 
     }
 }
