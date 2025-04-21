@@ -5,6 +5,7 @@ using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Data.Repositries.Interfacies;
 using Demo.DAL.Models.EmployeeModel;
 using Demo.PL.ViewModels;
+using Demo.PL.ViewModels.EmployeeModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.PL.Controllers
@@ -21,13 +22,27 @@ namespace Demo.PL.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public IActionResult Create(CreatedEmployeeDto employeeDto)
+        public IActionResult Create(EmployeeViewModel employeeDto)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int result = _employeeService.CreateEmployee(employeeDto);
+                    var employeeCreatedDto = new CreatedEmployeeDto()
+                    {
+                        Name = employeeDto.Name,
+                        Address = employeeDto.Address,
+                        Age = employeeDto.Age,
+                        IsActive = employeeDto.IsActive,
+                        Email = employeeDto.Email,
+                        EmployeeType = employeeDto.EmployeeType,
+                        Gender = employeeDto.Gender,
+                        HiringDate = employeeDto.HiringDate,
+                        PhoneNumber = employeeDto.PhoneNumber,
+                        Salary = employeeDto.Salary,
+                    };
+
+                    int result = _employeeService.CreateEmployee(employeeCreatedDto);
 
                     if (result > 0)
                         return RedirectToAction(nameof(Index));
@@ -78,9 +93,9 @@ namespace Demo.PL.Controllers
             if (!id.HasValue) return BadRequest();
             var employee = _employeeService.GetEmployeeById(id.Value);
             if (employee is null) return NotFound();
-            var employeeDto = new UpdatedEmployeeDto()
+            var employeeDto = new EmployeeViewModel()
             {
-                Id = employee.Id,
+                
                 Name = employee.Name,
                 Address = employee.Address,
                 Age = employee.Age,
@@ -100,20 +115,38 @@ namespace Demo.PL.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Edit([FromRoute] int? id, UpdatedEmployeeDto viewModel)
+        public IActionResult Edit([FromRoute] int? id, EmployeeViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
 
             try
             {
-
-                int result = _employeeService.UpdateEmployee(viewModel);
+                var employeeUpdatedDto = new UpdatedEmployeeDto()
+                {
+                    Name = viewModel.Name,
+                    Address = viewModel.Address,
+                    Age = viewModel.Age,
+                    IsActive = viewModel.IsActive,
+                    Email = viewModel.Email,
+                    EmployeeType = viewModel.EmployeeType,
+                    Gender = viewModel.Gender,
+                    HiringDate = viewModel.HiringDate,
+                    PhoneNumber = viewModel.PhoneNumber,
+                    Salary = viewModel.Salary,
+                };
+                int result = _employeeService.UpdateEmployee(employeeUpdatedDto);
                 if (result > 0)
+                {
+                    TempData["Message"] = "Employee Created Succesfuly";
                     return RedirectToAction(nameof(Index));
+
+                }
+
                 else
                 {
+                    TempData["Message"] = "Employee Created Failed";
                     ModelState.AddModelError(string.Empty, "Employee can't be updated !!");
-
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception ex)
