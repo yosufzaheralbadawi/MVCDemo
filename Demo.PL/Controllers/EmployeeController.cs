@@ -10,16 +10,35 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.PL.Controllers
 {
-    public class EmployeeController (IEmployeeService _employeeService , ILogger<DepartmentController> _logger, IWebHostEnvironment _environment) : Controller
+    public class EmployeeController (IEmployeeService _employeeService , 
+        ILogger<DepartmentController> _logger, IWebHostEnvironment _environment) : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string? EmployeeSearchName)
         {
             var Employee = _employeeService.GetAllEmployees();
-                return View(Employee);
+
+            dynamic Employees = null;
+
+            if (string.IsNullOrEmpty(EmployeeSearchName))
+            {
+                Employees = _employeeService.GetAllEmployees();
+            }
+            else
+            {
+                Employees = _employeeService.SearchEmployeeByName(EmployeeSearchName);
+            }
+
+            return View(Employees);
+
+           
         }
 
         [HttpGet]
-        public IActionResult Create() => View();
+        public IActionResult Create([FromServices] IDepartmentService departmentService)
+        {
+            ViewData["Departments"] = _departmentService.GetAllDepartments();
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Create(EmployeeViewModel employeeDto)
@@ -40,6 +59,7 @@ namespace Demo.PL.Controllers
                         HiringDate = employeeDto.HiringDate,
                         PhoneNumber = employeeDto.PhoneNumber,
                         Salary = employeeDto.Salary,
+                        DepartmentId = employeeDto.DepartmentId,
                     };
 
                     int result = _employeeService.CreateEmployee(employeeCreatedDto);
@@ -88,7 +108,7 @@ namespace Demo.PL.Controllers
 
         [HttpGet]
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id , [FromServices] IDepartmentService departmentService)
         {
             if (!id.HasValue) return BadRequest();
             var employee = _employeeService.GetEmployeeById(id.Value);
@@ -106,7 +126,7 @@ namespace Demo.PL.Controllers
                 Gender = Enum.Parse<Gender>(employee.Gender),
                 EmployeeType = Enum.Parse<EmployeeType>(employee.EmployeeType)
             };
-
+            ViewData["Departments"] = _departmentService.GetAllDepartments();
             return View(employeeDto);
 
         }
@@ -133,6 +153,7 @@ namespace Demo.PL.Controllers
                     HiringDate = viewModel.HiringDate,
                     PhoneNumber = viewModel.PhoneNumber,
                     Salary = viewModel.Salary,
+
                 };
                 int result = _employeeService.UpdateEmployee(employeeUpdatedDto);
                 if (result > 0)

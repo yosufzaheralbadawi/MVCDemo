@@ -16,7 +16,8 @@ namespace Demo.DAL.Data.Repositries.Classes
         public int Add(TEntity Entity)
         {
             _dbContext.Set<TEntity>().Add(Entity); // added
-            return _dbContext.SaveChanges();    // update database
+                                                   // update database
+            return _dbContext.SaveChanges();
         }
 
 

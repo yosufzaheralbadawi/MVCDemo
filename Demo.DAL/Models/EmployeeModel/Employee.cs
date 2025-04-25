@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.DAL.Models.DepartmentModels;
 
 namespace Demo.DAL.Models.EmployeeModel
 {
@@ -19,6 +20,12 @@ namespace Demo.DAL.Models.EmployeeModel
         public DateTime HiringDate { get; set; }
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set;}
+
+        public int? DepartmentId { get; set; }
+
+        public Department Department { get; set; }
+
+
 
     }
 }
