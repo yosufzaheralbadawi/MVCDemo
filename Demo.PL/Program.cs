@@ -4,6 +4,8 @@ using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Data.Configurations;
 using Demo.DAL.Data.Repositries.Classes;
 using Demo.DAL.Data.Repositries.Interfacies;
+using Demo.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.PL
@@ -26,6 +28,9 @@ namespace Demo.PL
             builder.Services.AddScoped<IEmployeeRepository , EmployeeRespository>();
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfailes() ));
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IUnitOfWork, IUnitOfWork>();
+            builder.Services.AddIdentity<ApplicatioUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -46,7 +51,7 @@ namespace Demo.PL
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Register}/{id?}");
 
             app.Run();
         }

@@ -8,6 +8,12 @@ namespace Demo.DAL.Data.Repositries.Interfacies
 {
     public interface IUnitOfWork
     {
+      
+        public IEmployeeRepository EmployeeRepository { get; set; }  
+
+        public IDepartmentRepostitory departmentRepostitory { get; set; }
+
+        int SaveChanges();
 
     }
 }

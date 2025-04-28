@@ -11,11 +11,11 @@ using Demo.DAL.Models.EmployeeModel;
 
 namespace Demo.BLL.Services.Clases
 {
-    public class EmployeeService(IEmployeeRepository _employeeRepository, IMapper _mapper) : IEmployeeService
+    public class EmployeeService(IUnitOfWork unitOfWork , IMapper _mapper) : IEmployeeService
     {
         public IEnumerable<EmployeeDto> GetAllEmployees(bool whitTracking)
         {
-            var Employees = _employeeRepository.GetAll(whitTracking);
+            var Employees = unitOfWork.EmployeeRepository .GetAll(whitTracking);
             var returneEmployees = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(Employees); //Auto Mapper
             //var returnedEmployees = Employees.Select(emp => new EmployeeDto()
             //{
@@ -35,7 +35,7 @@ namespace Demo.BLL.Services.Clases
 
         public IEnumerable<EmployeeDto> SearchEmployeeByName(string name)
         {
-            var Employees = _employeeRepository.GetEmployeeByName(name.ToLower());
+            var Employees = unitOfWork.EmployeeRepository.GetEmployeeByName(name.ToLower());
             var returneEmployees = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(Employees); //Auto Mapper
             //var returnedEmployees = Employees.Select(emp => new EmployeeDto()
             //{
@@ -54,7 +54,7 @@ namespace Demo.BLL.Services.Clases
         }
         public EmployeeDetailsDto? GetEmployeeById(int id)
         {
-            var Employee = _employeeRepository.GetById(id);
+            var Employee = unitOfWork.EmployeeRepository.GetById(id);
 
             //if (Employee == null) return null;
 
@@ -81,17 +81,17 @@ namespace Demo.BLL.Services.Clases
         public int CreateEmployee(CreatedEmployeeDto employee)
         {
             var Employee = _mapper.Map<CreatedEmployeeDto, Employee>(employee);
-            return _employeeRepository.Add(Employee);
+            return unitOfWork.EmployeeRepository.Add(Employee);
         }
 
         public bool DeleteEmployee(int id)
         {
-            var employee = _employeeRepository.GetById(id);
+            var employee = unitOfWork.EmployeeRepository.GetById(id);
             if (employee == null) return false;
             else
             {
                 employee.IsDeleted = true;
-                return _employeeRepository.Update(employee) > 0 ? true : false;
+                return unitOfWork.EmployeeRepository.Update(employee) > 0 ? true : false;
             }
 
         }
@@ -99,7 +99,7 @@ namespace Demo.BLL.Services.Clases
 
         public int UpdateEmployee(UpdatedEmployeeDto employee)
         {
-            return _employeeRepository.Update(_mapper.Map<UpdatedEmployeeDto , Employee> (employee));
+            return unitOfWork.EmployeeRepository.Update(_mapper.Map<UpdatedEmployeeDto , Employee> (employee));
         }
     }
 }
