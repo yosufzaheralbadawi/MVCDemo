@@ -29,7 +29,8 @@ namespace Demo.PL
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfailes() ));
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IUnitOfWork, IUnitOfWork>();
-            builder.Services.AddIdentity<ApplicatioUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddIdentity<ApplicatioUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             var app = builder.Build();
 
